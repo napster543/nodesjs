@@ -5,7 +5,7 @@
 //-- registrar la ruta de la bin de mongodb en el path de window 10 
 //-- crear un carpeta en la raiz donde se encuentra el proyecto ejem: c:\data\db  si no se crea esta carpeta saldra un error 
 // npm install --save mongoose   esta es la libreria para conectarse a la BD de mongo
-
+// delete put post get video 10 continuar con el 11
 'use strict'
  
 const express = require('express');
@@ -21,7 +21,11 @@ app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 
 app.get('/api/product/', (req, res)=>{
-    res.send(200, {product: []});
+    Product.find({},(err, products)=>{
+        if(err) return res.status(500).send({message : `Error al realizar la peticion: ${err}`})
+        if(!products)  return res.status(404).send({message:`No existen productos` })
+        res.send(200,{products});
+    }) 
 })
 
 app.get('/api/product/:productId', (req, res)=>{
@@ -54,11 +58,30 @@ app.post('/api/product', (req, res)=>{
 })
 
 app.put('/api/product/:productId', (req, res)=>{
-
+    let productId = req.params.productId
+    let update = req.body
+    
+    Product.findByIdAndUpdate(productId, update, (err, productUpdated)=>{
+        if(!productUpdated) return res.status(404).send({message:'el producto no existe'})
+        if(err) res.status(500).send({message : `error al borrar el producto: ${err}`})
+        res.status(200).send({product : productUpdated})
+    })
 })
 
 app.delete('/api/product/:productId', (req, res)=>{
+    let productId = req.params.productId
 
+    Product.findById(productId, (err, product)=>{
+        if(err) res.status(500).send({message : `error al borrar el producto: ${err}`})
+        
+        if(!product) return res.status(404).send({message:'el producto no existe'})
+        console.log(product);
+        product.remove(err =>{
+            if(err) res.status(500).send({message : `Error al borrar el producto:`})
+            
+            res.status(200).send({message : `El producto ha sido eliminado`})
+        })
+    })
 })
 
 mongoose.connect('mongodb://localhost:27017/shop', { useNewUrlParser: true }, (err, res) => {
