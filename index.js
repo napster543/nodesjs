@@ -5,7 +5,10 @@
 //-- registrar la ruta de la bin de mongodb en el path de window 10 
 //-- crear un carpeta en la raiz donde se encuentra el proyecto ejem: c:\data\db  si no se crea esta carpeta saldra un error 
 // npm install --save mongoose   esta es la libreria para conectarse a la BD de mongo
+//npm install --save bcrypt-nodejs es para encriptar las contraseñas
+//npm install --save crypto  tambien se instala
 // delete put post get video 10 continuar con el 11
+
 'use strict'
  
 
