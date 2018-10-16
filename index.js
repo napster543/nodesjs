@@ -9,6 +9,9 @@
 //npm install --save crypto  tambien se instala
 // delete put post get video 10 continuar con el 11
 
+//probar las rutas
+//https://www.youtube.com/watch?v=1J8vo9KD0XY&list=PLUdlARNXMVkk7E88zOrphPyGdS50Tadlr&index=17
+
 'use strict'
  
 
