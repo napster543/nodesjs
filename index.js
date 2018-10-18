@@ -20,14 +20,16 @@ const app = require('./app')
 const config = require('./config')
 
 
-
+ 
+//mongoose.set('useCreateIndex', true);
 mongoose.connect(config.db, { useNewUrlParser: true }, (err, res) => {
     if(err){
         return console.log(`Error al conectar a la base de datos: ${err}`)
     }
     console.log('Conexion a la base de datos establecida en mongodb...');
 
-    app.listen(config.port, ()=>{
+
+    app.listen(config.port, '192.168.0.10', ()=>{
         console.log(`api rest corriendo en http://localhost:${config.port}`); 
     });
 })

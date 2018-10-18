@@ -21,12 +21,16 @@ function signUp(req, res){
 
 function signIn(req, res) {
     User.find({ email:req.body.email}, (err, user)=>{
-        if(err) return res.status(500).send({message:err})
-        if(!user) return res.status(404).send({message: `No existe el usuario`})
+        if(err) return res.status(500).send({Message:err})
+        if(!user) return res.status(404).send({Message: `No existe el usuario`})
         req.user = user
         res.status(200).send({
-            message: `Te has logueado correctamente`,
-            token: service.createToken(user)
+            email : user[0]['email'],
+            displayName : user[0]['displayName'],
+            signupDate : user[0]['signupDate'],
+            isSuccess : true,
+            message: `Te has logueado correctamente`,            
+            token: service.createToken(user)            
         })
     })
 }
